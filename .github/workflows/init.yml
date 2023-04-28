@@ -11,3 +11,13 @@ jobs:
     - name: DoSomething
       run: |
         sudo apt-get -y install ostree
+        mkdir -p rootfs myrepo
+        cd rootfs
+        ostree init --repo ../myrepo
+        echo abc > hello.txt
+        ostree commit --repo ../myrepo --branch main
+        
+    - uses: actions/upload-artifact@v3
+      with:
+        name: ostree-repo
+        path: myrepo/
