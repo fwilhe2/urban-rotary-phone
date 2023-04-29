@@ -14,6 +14,9 @@ jobs:
         mkdir -p rootfs myrepo
         cd rootfs
         ostree init --repo ../myrepo
+        docker pull debian:testing
+        docker save debian:testing --output debian.tar
+        tar xf debian.tar -C rootfs
         echo abc > hello.txt
         ostree commit --repo ../myrepo --branch main
         
