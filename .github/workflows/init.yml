@@ -23,6 +23,8 @@ jobs:
         echo abc > hello.txt
         ostree commit --repo ../myrepo --branch main
         
+    - run: tree rootfs
+    
     - uses: actions/upload-artifact@v3
       with:
         name: ostree-repo
