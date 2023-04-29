@@ -17,7 +17,8 @@ jobs:
         docker save debian:testing --output debian.tar
         tar xf debian.tar -C temp
         cat temp/manifest.json
-        tar xf temp/8a11dc34ddccda4faf18062bb2fa6aac9acd470709f55e52513d59ea40d264b4/layer.tar -C rootfs
+
+        tar xf temp/$(jq '.[0].Layers[0]' manifest.json) -C rootfs
         
         cd rootfs
         ostree init --repo ../myrepo
@@ -25,9 +26,12 @@ jobs:
         echo abc > hello.txt
         ostree commit --repo ../myrepo --branch main
         
+        sudo tar czf myrepo.tgz myrepo/
+        sudo chown runner myrepo.tgz
+        
     - run: tree rootfs
     
     - uses: actions/upload-artifact@v3
       with:
         name: ostree-repo
-        path: myrepo/
+        path: myrepo.tgz
