@@ -11,11 +11,13 @@ jobs:
     - name: DoSomething
       run: |
         sudo apt-get -y install ostree
-        mkdir -p rootfs myrepo
+        mkdir -p rootfs myrepo temp
 
         docker pull debian:testing
         docker save debian:testing --output debian.tar
-        tar xf debian.tar -C rootfs
+        tar xf debian.tar -C temp
+        cat temp/manifest.json
+        tar xf 8a11dc34ddccda4faf18062bb2fa6aac9acd470709f55e52513d59ea40d264b4/layer.tar -C rootfs
         
         cd rootfs
         ostree init --repo ../myrepo
