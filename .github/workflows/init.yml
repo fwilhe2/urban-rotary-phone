@@ -18,7 +18,7 @@ jobs:
         tar xf debian.tar -C temp
         cat temp/manifest.json
 
-        tar xf temp/$(jq '.[0].Layers[0]' manifest.json) -C rootfs
+        tar xf temp/$(jq '.[0].Layers[0]' temp/manifest.json) -C rootfs
         
         cd rootfs
         ostree init --repo ../myrepo
