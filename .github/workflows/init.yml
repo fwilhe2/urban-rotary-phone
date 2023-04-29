@@ -10,7 +10,7 @@ jobs:
     - uses: actions/checkout@v3
     - name: DoSomething
       run: |
-        sudo apt-get -y install ostree
+        sudo apt-get -yqq install ostree
         mkdir -p rootfs myrepo temp
 
         docker pull debian:testing
@@ -25,6 +25,8 @@ jobs:
 
         echo abc > hello.txt
         ostree commit --repo ../myrepo --branch main
+        
+        cd ..
         
         sudo tar czf myrepo.tgz myrepo/
         sudo chown runner myrepo.tgz
